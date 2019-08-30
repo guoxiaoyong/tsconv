@@ -1,9 +1,9 @@
 from setuptools import setup
 
 setup(name='tsconv',
-      version='0.0.1',
-      description='merge multiple ssh config to one config',
-      long_description='merge multiple ssh config to one config',
+      version='0.0.2',
+      description='convert ts in sec/milisec/microsec/nanosec to human readable time',
+      long_description='convert ts in sec/milisec/microsec/nanosec to human readable time',
       author='Guo Xiaoyong',
       author_email='guo.xiaoyong@gmail.com',
       url='https://github.com/guoxiaoyong/tsconv',
