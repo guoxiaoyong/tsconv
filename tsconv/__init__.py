@@ -19,7 +19,7 @@ class UnitPerSec(enum.IntEnum):
     NANO_SEC = int(1e9)
 
 
-def is_resonable(ts: float):
+def is_reasonable(ts: float):
     return MIN_TS <= ts <= MAX_TS
 
 
@@ -42,21 +42,18 @@ def ts_to_datetime(ts, tz):
 
 
 def print_usage():
-  dt = datetime.datetime.now()
-  tm = dt.timestamp()
-  print(dt)
-  print(tm)
-  print(int(tm*(10**3)))
-  print(int(tm*(10**6)))
-  print(int(tm*(10**9)))
+  print('%s timestamp' % sys.argv[0])
 
 
 def main(argv=None):
-  argv == sys.argv
-  if len(argv) == 2:
+  check_interval()
+  argv = argv or sys.argv
+  if len(argv) >= 2:
     timestamp = float(argv[1])
     dt = ts_to_datetime(timestamp, SHANGHAI_TZ)
     print(dt)
+  else:
+    print_usage()
 
 if __name__ == "__main__":
   sys.exit(main(sys.argv))
