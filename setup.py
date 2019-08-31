@@ -1,7 +1,9 @@
 from setuptools import setup
 
+VERSION = '0.0.3'
+
 setup(name='tsconv',
-      version='0.0.2',
+      version=VERSION,
       description='convert ts in sec/milisec/microsec/nanosec to human readable time',
       long_description='convert ts in sec/milisec/microsec/nanosec to human readable time',
       author='Guo Xiaoyong',

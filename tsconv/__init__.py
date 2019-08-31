@@ -11,6 +11,7 @@ MIN_DATE = datetime.datetime(year=2000, month=1, day=1)
 MAX_DATE = MIN_DATE + datetime.timedelta(days=100*365)
 MIN_TS = MIN_DATE.timestamp()
 MAX_TS = MAX_DATE.timestamp()
+VERSION = '0.0.3'
 
 
 class UnitPerSec(enum.IntEnum):
@@ -47,7 +48,10 @@ def ts_to_datetime(ts, tz):
 
 
 def print_usage():
-  print('%s timestamp' % sys.argv[0])
+  program_name = sys.argv[0]
+  print(f'{program_name} {VERSION}')
+  print('usage:')
+  print(f'\t{program_name} timestamp')
 
 
 def main(argv=None):
@@ -61,7 +65,7 @@ def main(argv=None):
     result = ts_to_datetime(timestamp, tzinfo)
     print(result)
   except InvalidTsValue:
-    print(f'Reasonable time range [{MIN_DT}, {MAX_DT}]')
+    print(f'Reasonable time range [{MIN_DATE}, {MAX_DATE}]')
   except (IndexError, KeyError):
     print_usage()
 
