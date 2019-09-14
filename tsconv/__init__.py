@@ -1,5 +1,6 @@
 import datetime
 import enum
+import json
 import os
 import pytz
 import sys
@@ -10,7 +11,11 @@ MIN_DATE = datetime.datetime(year=2000, month=1, day=1)
 MAX_DATE = MIN_DATE + datetime.timedelta(days=100*365)
 MIN_TS = MIN_DATE.timestamp()
 MAX_TS = MAX_DATE.timestamp()
-VERSION = '0.0.3'
+VERSION = '0.0.4'
+
+
+def print_as_json(value):
+  print(json.dumps(value, indent=2, default=str))
 
 
 class UnitPerSec(enum.IntEnum):
@@ -39,22 +44,25 @@ class InvalidTsValue(ValueError):
     pass
 
 
-def guess_ts_unit(ts: float):
+def guess_ts_unit(ts):
+    ts = float(ts)
     for unit_per_sec in UnitPerSec:
         if is_reasonable(ts/unit_per_sec.value):
             return unit_per_sec
     raise InvalidTsValue('Timestamp value not in reasonable range!')
 
 
-def ts_to_datetime(ts, tz):
-    unit_per_sec = guess_ts_unit(ts)
-    ts = ts / unit_per_sec.value
+def ts_to_datetime(input_ts, tz):
+    unit_per_sec = guess_ts_unit(input_ts)
+    ts = float(input_ts) / unit_per_sec.value
     dt = datetime.datetime.fromtimestamp(ts, tz)
     return {
         'datetime': dt,
         'seconds': ts,
         'nanoseconds': int(ts * 1e9),
         'tz': tz,
+        'input': input_ts,
+        'unit': getattr(UnitName, unit_per_sec.name).value,
     }
 
 
@@ -72,9 +80,9 @@ def main(argv=None):
     tzinfo = pytz.timezone(tz_str)
 
     try:
-        timestamp = float(argv[1])
+        timestamp = argv[1]  # str
         result = ts_to_datetime(timestamp, tzinfo)
-        print(result)
+        print_as_json(result)
     except InvalidTsValue:
         print(f'Reasonable time range [{MIN_DATE}, {MAX_DATE}]')
     except (IndexError, KeyError):

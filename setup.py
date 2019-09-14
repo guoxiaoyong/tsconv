@@ -1,12 +1,13 @@
 from setuptools import setup
+import tsconv
 
-VERSION = '0.0.3'
+description = 'Convert unix timestamp in sec/millisec/microsec/nanosec to human readable time'
 
 setup(name='tsconv',
-      version=VERSION,
-      description='convert ts in sec/milisec/microsec/nanosec to human readable time',
-      long_description='convert ts in sec/milisec/microsec/nanosec to human readable time',
-      author='Guo Xiaoyong',
+      version=tsconv.VERSION,
+      description=description,
+      long_description=description,
+      author='Xiaoyong Guo',
       author_email='guo.xiaoyong@gmail.com',
       url='https://github.com/guoxiaoyong/tsconv',
       install_requires=['pytz'],
